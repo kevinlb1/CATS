@@ -1,0 +1,14 @@
+-param_dist arbitrary-npv qpstuff/arbitrary-npv-qp.txt
+-param_dist arbitrary-upv qpstuff/arbitrary-upv-qp.txt
+-param_dist L2 qpstuff/L2-qp.txt
+-param_dist L3 qpstuff/L3-qp.txt
+-param_dist L4 qpstuff/L4-qp.txt
+-param_dist L6 qpstuff/L6-qp.txt
+-param_dist L7 qpstuff/L7-qp.txt
+-param_dist matching qpstuff/matching-qp.txt
+-param_dist regions-npv qpstuff/regions-npv-qp.txt
+-param_dist regions-upv qpstuff/regions-upv-qp.txt
+-param_dist scheduling qpstuff/scheduling-qp.txt
+-feat_poly qpstuff/cass-qp.txt
+-feat_poly qpstuff/cplex-qp.txt
+-feat_poly qpstuff/lehman-qp.txt

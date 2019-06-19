@@ -1,0 +1,149 @@
+# Makefile for Microsoft visual C++ (tested on version 5 & 6)
+# to be called with GMAKE
+
+CC= cl
+
+ifndef RTLIB
+RTLIB= /ML
+endif
+CFLAGS=$(RTLIB) /O2 /W3 /DWIN32 /D_WINDOWS
+
+# Option -DCHECK checks for numerical problems during rounding of numbers.
+# It will slow things down a bit.
+# You can add a -DREAL=<float type> to the CFLAGS, to change the default float
+# type used in lp_solve (double) to float or 'long double'. However, type float
+# might be fast on your computer, but it is not accurate enough to solve even
+# moderately sized problems without running into numerical problems.
+# The use of long doubles does increase the numerical stability of lp_solve,
+# if your compiler actually implements them with more bits than a double. But
+# it slows down things quite a bit.
+
+# Choose your favorite or available version of lex and yacc
+
+YACC= bison -y
+
+LEX= flex -l
+
+RC= rc
+
+LEXLIB=
+
+#ANSI math lib
+MATHLIB=
+
+LPKSRC.c= lpkit.c solve.c debug.c read.c readmps.c hash.c presolve.c
+LEXFILE.l= lex.l
+YACCFILE.y= lp.y
+TESTFILES1= lp_examples/*.lp
+TESTFILES2= lp_examples/*.mps
+
+TARGET=lp_solve
+LPKLIB=liblpk.lib
+
+LEXFILE.c= $(LEXFILE.l:.l=.c)
+YACCFILE.c= $(YACCFILE.y:.y=.c)
+YACCFILE.obj= $(YACCFILE.y:.y=.obj)
+CSOURCES=lpkit.c solve.c debug.c read.c readmps.c hash.c presolve.c $(YACCFILE.c)
+COBJ=$(CSOURCES:.c=.obj)
+LPKSRC= $(LPKSRC.c) $(YACCFILE.c)
+LPKOBJ= $(LPKSRC:.c=.obj)
+HEADERS=lpkit.h lpglob.h patchlevel.h debug.h read.h hash.h declare.h ufortify.h fortify.h
+
+all:    clean1 lpk clean2 dll
+
+dll:
+	@$(MAKE) "RTLIB=/MD" lpsolve.dll
+
+lpk:	demo.exe $(TARGET).exe lp2mps.exe mps2lp.exe
+
+$(COBJ): $(HEADERS) $(CSOURCES) $(LEXFILE.c)
+	$(CC) -c $(CFLAGS) $(CSOURCES)
+
+demo.exe: demo.c $(HEADERS) $(LPKLIB)
+	$(CC) -o demo $(CFLAGS) demo.c $(LPKLIB) $(LEXLIB) $(MATHLIB)
+
+lp2mps.exe: lp2mps.c $(HEADERS) $(LPKLIB)
+	$(CC) -o lp2mps $(CFLAGS) lp2mps.c $(LPKLIB) $(LEXLIB) $(MATHLIB)
+
+mps2lp.exe: mps2lp.c $(HEADERS) $(LPKLIB)
+	$(CC) -o mps2lp $(CFLAGS) mps2lp.c $(LPKLIB) $(LEXLIB) $(MATHLIB)
+
+$(TARGET).exe: lp_solve.c $(HEADERS) $(LPKLIB)
+	$(CC) -o $(TARGET).exe $(CFLAGS) lp_solve.c $(LPKLIB) $(LEXLIB) $(MATHLIB)
+
+lpsolve.res: lpsolve.rc resource.h
+	$(RC) lpsolve.rc
+
+windll.obj: $(HEADERS) windll.c
+	$(CC) -c windll.c $(CFLAGS)
+
+lpsolve.dll: windll.obj windll.def lpsolve.res $(COBJ)
+	link /DLL windll.obj /DEF:windll.def $(COBJ) lpsolve.res /OUT:lpsolve.dll
+
+$(LPKLIB): $(LPKOBJ)
+	link /LIB $(LPKOBJ) /OUT:$@
+
+$(YACCFILE.obj): $(LEXFILE.c)
+
+$(LEXFILE.c): $(LEXFILE.l)
+	$(LEX) -o$(LEXFILE.c) $(LEXFILE.l)
+
+$(YACCFILE.c): $(YACCFILE.y)
+	$(YACC) -o$(YACCFILE.c) $(YACCFILE.y)
+
+purify: lp_solve.obj $(LPKLIB)
+	purify $(CC) -o $(TARGET).exe $(CFLAGS) lp_solve.obj $(LPKLIB) $(LEXLIB) $(MATHLIB)
+
+quantify: lp_solve.obj $(LPKLIB)
+	quantify $(CC) -o $(TARGET).exe $(CFLAGS) lp_solve.obj $(LPKLIB) $(LEXLIB) $(MATHLIB)
+
+test:
+	-for i in $(TESTFILES1); do\
+		./$(TARGET) -p -s -S3 -time < $$i > xxx.tmp;\
+		if diff xxx.tmp lp_examples/`basename $$i .lp`.out > /dev/null; then\
+			echo "$$i gives the correct result";\
+		else\
+			echo "*** $$i gives different result, please check ***";\
+		fi;\
+	done;\
+	for i in $(TESTFILES2); do\
+		./$(TARGET) -mps -p -s -S3 -time < $$i > xxx.tmp;\
+		if diff xxx.tmp lp_examples/`basename $$i .mps`.out > /dev/null; then\
+			echo "$$i gives the correct result";\
+		else\
+			echo "*** $$i gives different result, please check ***";\
+		fi;\
+	done;\
+        rm xxx.tmp
+
+mktest:
+	-for i in $(TESTFILES1); do\
+		./$(TARGET) -p -s -S3 -time < $$i > lp_examples/`basename $$i .lp`.out;\
+	done;\
+	for i in $(TESTFILES2); do\
+		./$(TARGET) -mps -p -s -S3 -time < $$i > lp_examples/`basename $$i .mps`.out;\
+	done;\
+
+$(TARGET).man: $(TARGET).1
+	nroff -man $(TARGET).1 > $(TARGET).man
+
+MANIFEST: clean
+	ls -lR > MANIFEST; ls -lR > MANIFEST
+
+cleanobj:
+	rm -f "*.obj"
+
+clean1: cleanobj
+
+clean2:
+	rm -f "*.obj"
+
+clean: cleanobj
+	rm -f $(LPKLIB)
+	rm -f $(LEXFILE.c) $(YACCFILE.c) lpsolve.exp lpsolve.lib lpsolve.res pe.cfg lp_examples\pe.cfg demo.exe $(TARGET).exe lp2mps.exe mps2lp.exe lpsolve.dll
+
+distrib: $(TARGET).man MANIFEST
+	cd ..; tar -cvf - lp_solve_4.0 | gzip --best > lp_solve_4.0.tar.gz
+
+TAGS:
+	etags *.[chyl]
