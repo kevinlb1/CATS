@@ -831,7 +831,7 @@ double Param::ERand(unsigned short x[3])
 void Param::usage()
 {
     // 80 cols:  12345678901234567890123456789012345678901234567890123456789012345678901234567890
-    int count = printf("CATS v%s (http://robotics.stanford.edu/CATS)\n", CATS_VERSION_STRING);
+    int count = printf("CATS v%s (https://www.cs.ubc.ca/~kevinlb/CATS/)\n", CATS_VERSION_STRING);
     int count2 = printf("Kevin Leyton-Brown, Mark Pearson, Galen Andrew, Yoav Shoham; Stanford University\n");
     int t; // -- NOTE: MSVC uses older syntax, so cannot declare it withn a forloop :(
     for (t = 0; t < max(count, count2); t++) printf("=");
