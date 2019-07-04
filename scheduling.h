@@ -1,6 +1,5 @@
 #ifndef _SCHEDULING_H
 #define _SCHEDULING_H
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -30,7 +30,6 @@ bids 800
 
 #ifndef BidSet_H
 #define BidSet_H
-#endif
 
 #include <stdio.h>
 #include <string.h>

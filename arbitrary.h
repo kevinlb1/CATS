@@ -1,6 +1,5 @@
 #ifndef _ARBITRARY_H
 #define _ARBITRARY_H
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>

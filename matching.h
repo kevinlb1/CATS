@@ -1,6 +1,5 @@
 #ifndef _MATCHING_H
 #define _MATCHING_H
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>

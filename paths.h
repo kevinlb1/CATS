@@ -1,6 +1,5 @@
 #ifndef _PATHS_H
 #define _PATHS_H
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>

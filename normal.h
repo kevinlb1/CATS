@@ -2,7 +2,6 @@
 
 #ifndef _NORMAL_H_
 #define _NORMAL_H_
-#endif
 
 #include "Param.h"
 

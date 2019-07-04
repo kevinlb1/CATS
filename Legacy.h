@@ -8,7 +8,6 @@
 
 #ifndef _LEGACY_H_
 #define _LEGACY_H_
-#endif
 
 #include "bid.h"
 #include "normal.h"

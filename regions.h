@@ -3,7 +3,6 @@
 
 #ifndef _REGIONS_H
 #define _REGIONS_H
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>

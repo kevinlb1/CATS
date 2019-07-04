@@ -8,7 +8,6 @@
 
 #ifndef _PARAM_H_
 #define _PARAM_H_
-#endif
 
 #include <string.h>
 #include "polyModel.h"
