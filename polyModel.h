@@ -3,7 +3,6 @@
 
 class PolyModel {
 public:
-
     static const int EMPTY;
 
     int degree;
@@ -23,7 +22,6 @@ private:
     bool *varIsFree;
 
 public:
-
     PolyModel(const char* filename);
     PolyModel(const PolyModel &orig);
     ~PolyModel();
@@ -51,7 +49,7 @@ private:
     int nChooseK(int n, int k);
     int simplicalNK(int n, int k);
     bool increment(int *vars);
-
 };
 
 #endif
+

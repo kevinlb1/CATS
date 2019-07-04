@@ -1,5 +1,6 @@
 #ifndef _FEATURE_CALC_H
 #define _FEATURE_CALC_H
+#endif
 
 #ifdef USE_CPLEX
 #include <cplex.h>
@@ -35,6 +36,7 @@ struct FeatureCalc {
         LPData();
         void deallocate();
         void allocate(BidSet *b);
+
     } lpd;
 
     static const char *featureNames[];
@@ -60,3 +62,4 @@ struct FeatureCalc {
 };
 
 #endif
+
