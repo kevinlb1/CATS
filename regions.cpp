@@ -23,6 +23,7 @@ bool Regions::IsConnectedLocations(int loc1, int loc2)
         if (location[loc1].neighbor[i] == loc2) {
             return true;
         }
+    }
 
     return false;
 }
