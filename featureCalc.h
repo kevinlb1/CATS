@@ -1,6 +1,5 @@
 #ifndef _FEATURE_CALC_H
 #define _FEATURE_CALC_H
-#endif
 
 #ifdef USE_CPLEX
 #include <cplex.h>
