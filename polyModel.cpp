@@ -180,6 +180,7 @@ double PolyModel::derivAt(double pos[], int var)
             else if (vars[i] < var) {
                 break;
             }
+        }
 
         if (varDegree == 0) {
             continue;
@@ -192,6 +193,7 @@ double PolyModel::derivAt(double pos[], int var)
             if (vars[i] != var || (i != 0 && vars[i - 1] == var)) {
                 derivOfTerm *= pos[vars[i]];
             }
+        }
 
         answer += derivOfTerm;
     }
