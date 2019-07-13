@@ -1,3 +1,8 @@
+%{
+    #include <stdio.h> 
+      #include "y.tab.h"
+%}
+
 WS   [ \n\t]+
 LT   [A-Za-z]
 KR   [A-Za-z0-9_\[\]\{\}/.&#$%~'@^]
@@ -28,20 +33,20 @@ LOG  [<>]?=?
 }
 
 <INITIAL>"," {
-  return(",");
+  return(COMMA);
 }
 
 <INITIAL>[mM][iI][nN]":" {
-  return("MINIMISE");
+  return(MINIMISE);
 }
 
 <INITIAL>[mM][aA][xX]":" {
-  return("MAXIMISE");
+  return(MAXIMISE);
 }
 
 <INITIAL>{NM} {
   f = atof((char *)yytext);
-  return("CONS");
+  return(CONS);
 } /* f contains the last float */
 
 <INITIAL>{S_OP} {
@@ -49,7 +54,7 @@ LOG  [<>]?=?
   for(x = 0; x < yyleng; x++)
     if(yytext[x] == '-' || yytext[x] == '+')
       Sign = (Sign == (yytext[x] == '+'));
-  return ("SIGN");
+  return (SIGN);
   /* Sign is TRUE if the sign-string
      represents a '-'. Otherwise Sign
      is FALSE */
@@ -57,29 +62,29 @@ LOG  [<>]?=?
 
 <INITIAL>[Ii][Nn][Tt] {
   Within_int_decl = TRUE;
-  return("VAR");
+  return(VAR);
 }
 
 <INITIAL>{VR} {
   strcpy(Last_var, (char *)yytext);
-  return("VAR");
+  return(VAR);
 }
 
 <INITIAL>":" {
-  return ("COLON");
+  return (COLON);
 }
 
 <INITIAL>"*" {
-  return("AR_M_OP");
+  return(AR_M_OP);
 }
 
 <INITIAL>{LOG} {
-  return("RE_OP");
+  return(RE_OP);
 }
 
 <INITIAL>";" {
   Within_int_decl = FALSE;
-  return("END_C");
+  return(END_C);
 }
 
 <INITIAL>. {

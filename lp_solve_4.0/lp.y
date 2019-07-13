@@ -2,9 +2,7 @@
 /* NAME  : lp.y                                                              */
 /* ========================================================================= */
 
-
 %token VAR CONS SIGN AR_M_OP RE_OP END_C COMMA COLON MINIMISE MAXIMISE
-
 
 %{
 #include <string.h>

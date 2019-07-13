@@ -24,9 +24,9 @@ CFLAGS= -O3 -Wall -pedantic -ansi
 
 # Choose your favorite or available version of lex and yacc
 
-#YACC= yacc
+#YACC= yacc -d
 #especially for linux:
-YACC= bison -y
+YACC= bison -y -d
 
 #LEX= lex
 #especially for linux:
