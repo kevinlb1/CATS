@@ -459,7 +459,7 @@ double FeatureCalc::LPsolve(BidSet *b)
         goodCount++;
     }
 
-    lpd.status = CPXiaddrows(lpd.env, lpd.lp, 0, rowsInLPMat, nonzeroInLPMat, 
+    lpd.status = CPXaddrows(lpd.env, lpd.lp, 0, rowsInLPMat, nonzeroInLPMat, 
             lpd.rhs, lpd.sense, lpd.rmatbeg,
             lpd.rmatind, lpd.rmatval, NULL, NULL);
 

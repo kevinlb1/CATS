@@ -177,6 +177,7 @@ int main(int argc, char *argv[])
                     if (nextScore < unweightedScore) {
                         unweightedScore = nextScore;
                     // ==	  fprintf(stderr, "##### NEXT %g\n", nextScore);
+                    }
                 }
 
                 unweightedScore = MAX(unweightedScore, 0);
@@ -214,11 +215,12 @@ int main(int argc, char *argv[])
             b = samples[selectedIndex];
             //  p.distribution = distTypes[selectedIndex];
 
-            for (int i = 0; i < p.numWeightedSamples; i++)
+            for (int i = 0; i < p.numWeightedSamples; i++) {
                 if (i != selectedIndex) {
                     delete dists[i];
                     delete samples[i];
                 }
+            }
 
             delete[] dists;
             delete[] samples;
