@@ -140,8 +140,8 @@ Param::Param(char** argv, int argc)
                     return;
                 }
 
-                argRecognized[i + 1] = true;
                 i++;
+                argRecognized[i] = true;
             }
             // dist_dist
             else if (!stricmp(in, "dist_dist")) {
@@ -154,9 +154,8 @@ Param::Param(char** argv, int argc)
                     return;
                 }
 
-                dist_dist_file = argv[i + 1];
-                argRecognized[i + 1] = true;
-                i++;
+                dist_dist_file = argv[++i];
+                argRecognized[i] = true;
             }
             // num_runs
             else if (!stricmp(in, "n")) {
@@ -202,8 +201,8 @@ Param::Param(char** argv, int argc)
                     return;
                 }
 
-                argRecognized[i] = true;
                 i++;
+                argRecognized[i] = true;
             }
             // seed1
             else if (!stricmp(in, "seed")) {
@@ -223,8 +222,8 @@ Param::Param(char** argv, int argc)
                     return;
                 }
 
-                argRecognized[i] = true;
                 i++;
+                argRecognized[i] = true;
             }
             // seed2
             else if (!stricmp(in, "seed2")) {
@@ -244,8 +243,8 @@ Param::Param(char** argv, int argc)
                     return;
                 }
 
-                argRecognized[i] = true;
                 i++;
+                argRecognized[i] = true;
             }
             // bids
             else if (!stricmp(in, "bids")) {
@@ -265,8 +264,8 @@ Param::Param(char** argv, int argc)
                     return;
                 }
 
-                argRecognized[i] = true;
                 i++;
+                argRecognized[i] = true;
             }
             // random bids
             else if (!stricmp(in, "random_bids")) {
@@ -308,8 +307,8 @@ Param::Param(char** argv, int argc)
                     return;
                 }
 
-                argRecognized[i] = true;
                 i++;
+                argRecognized[i] = true;
             }
             // random goods
             else if (!stricmp(in, "random_goods")) {
@@ -354,8 +353,8 @@ Param::Param(char** argv, int argc)
                 }
 
                 model_filenames_file = argv[i + 1];
-                argRecognized[i] = true;
                 i++;
+                argRecognized[i] = true;
             }
             // filename
             else if (!stricmp(in, "filename")) {
@@ -369,8 +368,8 @@ Param::Param(char** argv, int argc)
 
                 filename = argv[i + 1];
                 cplex_filename = filename; // in the future this could be a separate parameter
-                argRecognized[i] = true;
                 i++;
+                argRecognized[i] = true;
             }
             // verbatim
             else if (!stricmp(in, "verbatim")) {
@@ -439,8 +438,8 @@ Param::Param(char** argv, int argc)
                     exit(1);
                 }
 
-                argRecognized[i] = true;
                 i++;
+                argRecognized[i] = true;
             }
             // no_normalization
             else if (!stricmp(in, "no_normalization")) {
